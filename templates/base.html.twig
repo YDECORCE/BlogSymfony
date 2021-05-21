@@ -9,6 +9,7 @@
 	{% block stylesheets %}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="assets/css/app.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	{% endblock %}
 </head>
 <body>
@@ -18,7 +19,14 @@
 	    		<a href="#" class="brand-logo">Symfony Blog</a>
 			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 			        <li><a href="{{ path('homepage')}}">Home</a></li>
-			        <li><a href="#">Login</a></li>
+			        {% if app.user %}
+			        	{% if is_granted('ROLE_ADMIN') %}
+							<li><a href="/admin">Admin.</a></li>
+						{% endif %}
+						<li><a href="/logout">Logout</a></li>
+					{% else %}
+						<li><a href="/login">Login</a></li>
+			        {% endif %}
 		      	</ul>
 	    	</div>
 	    </div>

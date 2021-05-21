@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,9 @@ class BlogController extends AbstractController
     }
     public function add(Request $request)
     {
+        // code pour limiter l'accès à la méthode aux role Admin
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
     	$article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
@@ -69,6 +73,9 @@ class BlogController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function edit(Article $article, Request $request)
     {
         $oldPicture = $article->getPicture();
@@ -118,5 +125,20 @@ class BlogController extends AbstractController
     public function remove($id)
     {
     	return new Response('<h1>Supprimer l\'article ' .$id. '</h1>');
+    }
+
+    public function admin()
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
+            [],
+            ['lastUpdateDate' => 'DESC']
+        );
+
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+
+        return $this->render('admin/index.html.twig', [
+            'articles' => $articles,
+            'users' => $users
+        ]);
     }
 }
