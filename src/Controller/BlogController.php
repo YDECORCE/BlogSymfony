@@ -17,12 +17,20 @@ class BlogController extends AbstractController
  
     public function index()
     {
+        $ontop=$this->getDoctrine()->getRepository(Article::class)->findOneBy(
+            ['ontop' => true]
+            
+        );
         $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
-            ['isPublished' => true],
-            ['publicationDate' => 'desc']
+            ['isPublished' => true,
+                'ontop' => false],
+            []
         );
 
-        return $this->render('blog/index.html.twig', ['articles' => $articles]);
+        return $this->render('blog/index.html.twig', [
+            'articles' => $articles,
+            'ontop' => $ontop
+            ]);
     }
     public function add(Request $request)
     {

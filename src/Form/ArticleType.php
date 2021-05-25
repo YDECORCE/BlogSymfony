@@ -25,6 +25,7 @@ class ArticleType extends AbstractType
             ->add('title', TextType::class, ['required' => false])
             ->add('content', TextareaType::class, ['required' => false])
             ->add('isPublished', CheckboxType::class, ['required' => false])
+            ->add('ontop', CheckboxType::class, ['required' => false])
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'label',

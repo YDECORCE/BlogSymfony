@@ -56,6 +56,11 @@ class Article
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $ontop;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -158,6 +163,18 @@ class Article
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getOntop(): ?bool
+    {
+        return $this->ontop;
+    }
+
+    public function setOntop(bool $ontop): self
+    {
+        $this->ontop = $ontop;
 
         return $this;
     }

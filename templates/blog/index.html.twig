@@ -6,9 +6,24 @@
 
 {% block content %}
 	<div class="container">
-		<div class="row">
+		<div class="row ontop grey lighten-2 ">
+			<div class="col s12 m4 l5">
+				<img src="{{ asset('uploads/' ~ ontop.picture) }}" class="responsive-img">	
+			</div>
+			<div class="col s12 m8 l7">
+				<h2>{{ontop.title}}</h2>
+				{% for badge in ontop.categories %}
+								<div class="label">	
+								{{badge.label}}
+								</div>
+				{% endfor %}
+				<p>{{ontop.content}}</p> 
+			</div>
+			
+		</div>
+		<div class="row" style="display:flex; flex-wrap:wrap; justify-content:flex-end">
 			{% for article in articles %}
-				<div class="col s12 m3 l4">
+				<div class="col s12 m6 l4">
 					<div class="card">
         				<div class="card-image">
           					<img src="{{ asset('uploads/' ~ article.picture) }}">

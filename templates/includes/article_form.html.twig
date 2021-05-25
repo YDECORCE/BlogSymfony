@@ -29,6 +29,15 @@
 	</div>
 
 	<div class="input-field col s12 m12 l12">
+		<p>
+			<label>
+		        {{ form_widget(form.ontop, {'attr': {'class': 'filled-in'}}) }}
+		        <span>Mettre à la une</span>
+	      	</label>
+      	</p>
+	</div>
+
+	<div class="input-field col s12 m12 l12">
 		<input type="submit" name="" value="Enregistrer" class="btn btn-primary">
 	</div>
 {{ form_end(form) }}
