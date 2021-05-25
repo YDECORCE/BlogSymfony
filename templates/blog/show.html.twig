@@ -13,7 +13,11 @@
 				<p>
 					<img src="{{ asset('uploads/' ~ article.picture) }}" class="responsive-img">
 				</p>
-				<span class="categories">{% for category in article.categories %} {{ category.label }}{{ loop.last ? '' : ',' }} {% endfor %}</span>
+				{% for badge in article.categories %}
+					<div class="label">	
+						{{badge.label}}
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 		<div class="row">

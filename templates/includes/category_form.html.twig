@@ -1,0 +1,13 @@
+{# templates/includes/article_form.html.twig #}
+{{ form_start(form, {'attr': {'class': 'row'}}) }}
+	
+	<div class="input-field col s12 m6 l6">
+		{{ form_widget(form.label, {'attr': {'placeholder': 'Nom de la catégorie'}}) }}
+		{{ form_label(form.label, 'Nouvelle catégorie') }}
+        <span class="error">{{ form_errors(form.label) }}</span>
+	</div>
+
+	<div class="input-field col s12 m12 l12">
+		<input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+	</div>
+{{ form_end(form) }}

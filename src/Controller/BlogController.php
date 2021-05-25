@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Form\ArticleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -57,8 +59,8 @@ class BlogController extends AbstractController
             $em = $this->getDoctrine()->getManager(); // On récupère l'entity manager
             $em->persist($article); // On confie notre entité à l'entity manager (on persist l'entité)
             $em->flush(); // On execute la requete
-
-            return new Response('L\'article a bien été enregistrer.');
+            $this->addFlash('info','Article créé');            
+            return $this->redirectToRoute('admin');
         }
 
     	return $this->render('blog/add.html.twig', [
@@ -112,7 +114,8 @@ class BlogController extends AbstractController
             $em->persist($article);
             $em->flush();
 
-            return new Response('L\'article a bien été modifier.');
+            $this->addFlash('info','Article modifié');            
+            return $this->redirectToRoute('admin');
         }
 
     	return $this->render('blog/edit.html.twig', [
@@ -122,9 +125,13 @@ class BlogController extends AbstractController
     }
 
 
-    public function remove($id)
+    public function remove(Article $article)
     {
-    	return new Response('<h1>Supprimer l\'article ' .$id. '</h1>');
+    	$em=$this->getDoctrine()->getManager();
+        $em->remove($article);
+        $em->flush();
+        $this->addFlash('info','Article supprimé');            
+            return $this->redirectToRoute('admin');
     }
 
     public function admin()
@@ -136,9 +143,12 @@ class BlogController extends AbstractController
 
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+
         return $this->render('admin/index.html.twig', [
             'articles' => $articles,
-            'users' => $users
+            'users' => $users,
+            'categories' => $categories
         ]);
     }
 }

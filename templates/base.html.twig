@@ -6,17 +6,17 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	{% block stylesheets %}
+
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link rel="stylesheet" href="assets/css/app.css">
+        <link rel="stylesheet" href="{{asset('assets/css/app.css')}}">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	{% endblock %}
+
 </head>
 <body>
-	<nav>
-	    <div class="nav-wrapper">
+	<nav class="blue lighten-2" style="margin-bottom:25px">
+	    <div class="nav-wrapper" >
 	    	<div class="container">
-	    		<a href="#" class="brand-logo">Symfony Blog</a>
+	    		<a href="/" class="brand-logo">My Blog</a>
 			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
 			        <li><a href="{{ path('homepage')}}">Home</a></li>
 			        {% if app.user %}
@@ -31,7 +31,18 @@
 	    	</div>
 	    </div>
   	</nav>
+	{% for message in app.flashes('info') %}
+	<div class="container">
+	<div class="materialert info" id="flash">
+		    <div class="material-icons">info_outline</div>
+		     {{ message }}
+			  <button type="button" class="close-alert" onclick="document.getElementById('flash').style.display='none'">×</button>
+	</div>
+	</div>
+	
 
+    
+{% endfor %}
   	{% block content %}
 
   	{% endblock %}
